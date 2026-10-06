@@ -1,0 +1,8 @@
+venv/
+.venv/
+.pytest_cache/
+__pycache__/
+.env
+gold_trading_system/data/
+gold_trading_system/reports/*.json
+gold_trading_system/reports/daily_report.md

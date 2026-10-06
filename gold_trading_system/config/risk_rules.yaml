@@ -1,0 +1,15 @@
+# Shield (core/risk_guardrails) runtime limits.
+#
+# These values may only TIGHTEN the hard ceilings compiled into
+# core/risk_guardrails/validator.py (HARD_* constants). A value looser than
+# its ceiling makes ShieldLimits fail validation at load time, so editing
+# this file can never unlock more risk than the code allows. Changing the
+# ceilings themselves requires a human-reviewed code change (see README.md).
+
+max_daily_loss_pct: 5.0          # daily equity loss vs. day-start equity -> halt until next server day
+max_drawdown_pct: 20.0           # equity drawdown from peak -> KILL (latched, human reset only)
+risk_per_trade_pct: 1.0          # equity % risked at the stop-loss on each new trade
+min_reward_risk: 1.5             # TP distance must be >= this multiple of SL distance
+max_total_open_risk_pct: 2.0     # sum of risk-at-stop across all open positions
+max_spread_points: 80            # reject entries when the live spread is wider than this
+max_lot_size: 5.0                # absolute per-order cap

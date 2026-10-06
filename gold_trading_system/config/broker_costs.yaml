@@ -1,0 +1,44 @@
+# Broker cost model for XAUUSD.
+#
+# HONESTY NOTE: these are REPRESENTATIVE retail-broker figures for a
+# standard (non-ECN, all-in-spread) XAUUSD CFD account, used to give the
+# backtester/Monte Carlo engine a realistic-shaped cost model. They are
+# NOT pulled from any specific live broker feed. Before this system is
+# used against a real account, replace every value below with that
+# broker's actual published contract specification and observed spread
+# behavior (e.g. via a demo-account spread log).
+
+contract:
+  contract_size_oz: 100.0           # 1.0 standard lot = 100 troy oz
+  price_point: 0.01                 # smallest quoted price increment
+  point_value_usd_per_lot: 1.0      # USD value of a 1-point move, per 1.0 lot
+  min_lot: 0.01
+  lot_step: 0.01
+  max_lot: 50.0
+
+spread:
+  typical_spread_points: 25         # normal-hours (London/NY overlap) all-in spread
+  asian_session_spread_points: 40   # thinner liquidity outside London/NY
+  news_hours_spread_points: 180     # widened spread during high-impact releases
+  news_widening_window_minutes: 15  # spread stays widened for this long around each event
+  news_events_utc:                  # representative high-impact USD release times (illustrative,
+                                     # not a live economic calendar feed -- Phase 3's mock data
+                                     # generator uses these as widening windows, not real dates)
+    - "13:30"   # US NFP / CPI / major data typically release at 13:30 UTC (8:30am ET)
+    - "18:00"   # FOMC statement time (varies by meeting; illustrative slot)
+
+commission:
+  per_lot_round_turn_usd: 6.0       # charged on standard accounts baked into spread;
+                                     # set to 0.0 if using a pure ECN + raw-spread model instead
+
+swap:
+  # Measured on MetaQuotes-Demo 2026-10-04 (symbol_info: swap_mode=POINTS,
+  # long -12.6, short -4.6 points/lot/night; 1 point = $1/lot). Was -6.50/-2.30.
+  swap_long_usd_per_lot_per_night: -12.60
+  swap_short_usd_per_lot_per_night: -4.60
+  triple_swap_day: WEDNESDAY        # standard FX/CFD convention: Wed swap = 3x to cover weekend
+
+slippage_model:
+  normal_hours_stddev_points: 3
+  news_hours_stddev_points: 45
+  max_realistic_slippage_points: 150   # clip outlier draws in the simulator
