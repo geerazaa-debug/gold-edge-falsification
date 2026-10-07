@@ -44,3 +44,18 @@ run on this data. If it FAILS, the idea is closed for this dataset.
 - The optional extra gate "post-cost return > benchmark return" suggested in conversation was
   NOT added: the question is risk-adjusted performance at matched exposure, and the two gates
   above stay the only criteria.
+
+## Result (2026-10-07, single run, script e001281) — PASS
+Full numbers: research/results/vol_managed_gold.json.
+
+| Window | Avg weight | Sharpe treat / bench | Max DD treat / bench | CAGR treat / bench |
+|---|---|---|---|---|
+| IS 2004-07-13..2020-02-14 | 0.868 | 0.591 / 0.501 | 42.3% / 48.2% | 7.44% / 7.46% |
+| OOS 2020-02-17..2026-10-02 | 0.877 | 0.879 / 0.810 | 21.3% / 26.6% | 12.62% / 13.23% |
+
+Both gates pass in both windows after costs.
+
+Post-hoc, informational only (NOT a gate, computed after seeing the result): paired stationary
+block bootstrap (block 20 days, 2,000 draws) of the Sharpe difference gives P(diff <= 0) =
+0.089 (IS) and 0.270 (OOS). The improvement is consistent in sign but small; it is a
+risk-management effect (similar return, lower drawdown), not a return edge.
