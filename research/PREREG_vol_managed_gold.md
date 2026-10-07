@@ -37,3 +37,10 @@ Anything else = FAIL. Reported but not gated: CAGR, Calmar, turnover, average we
 ## Trial accounting
 This is one new trial. No variants (other sigma_target, lookback, band, frequency) will be
 run on this data. If it FAILS, the idea is closed for this dataset.
+
+## Amendment 1 (2026-10-07, before any computation)
+- Capital: $10,000 per window (same as the Option B test). Weights are applied as exact
+  fractional notional; no 0.01-lot rounding, so results measure the method, not lot granularity.
+- The optional extra gate "post-cost return > benchmark return" suggested in conversation was
+  NOT added: the question is risk-adjusted performance at matched exposure, and the two gates
+  above stay the only criteria.
